@@ -65,7 +65,8 @@ $ helm3 install ingress ingress-nginx/ingress-nginx
 $ helm3 repo add collective https://chartmuseum.the-collective-group.com
 $ helm3 repo update
 
-$ helm3 upgrade -i redis collective/redis --version v0.1
-$ helm3 upgrade -i redis-proxy collective/redis-proxy --version v0.4
-$ helm3 upgrade -i sense-hat collective/sense-hat --version v0.1
+$ helm3 upgrade -i redis collective/redis
+$ helm3 upgrade -i redis-proxy collective/redis-proxy
+$ helm3 upgrade -i web-app collective/web-app
+$ helm3 upgrade -i sense-hat collective/sense-hat
 ```
