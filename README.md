@@ -19,76 +19,53 @@ $ sudo vi /boot/firmware/cmdline.txt
 cgroup_enable=memory swapaccount=1 cgroup_memory=1 cgroup_enable=cpuset
 ```
 
-### Let iptables see bridged traffic.
+### Create UDEV rule for i2c
+`/etc/udev/rules.d/99-i2c.rules`
 ```
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
-EOF
-sudo sysctl --system
-```
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-### Install dependencies
-```
-$ sudo apt-get update && sudo apt-get install -y \
-    python-dev \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    software-properties-common \
-    git \
-    vim \
-    netstat
+KERNEL=="i2c-[0-7]",MODE="0666"
 ```
 
-### Install Docker
+### Need to blacklist 
+`/etc/modprobe.d/blacklist-industialio.conf`
 ```
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-$ sudo add-apt-repository \
-   "deb [arch=arm64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io conntrack 
-
-$ sudo usermod -aG docker $USER
-
-
-# Setup docker ops
-cat > /etc/docker/daemon.json <<EOF
-{
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
-}
-EOF
-```
-
-### Install helm
-```
-$ curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
-$ sudo apt-get install apt-transport-https --yes
-$ echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-$ sudo apt-get update
-$ sudo apt-get install helm
+blacklist st_magn_spi
+blacklist st_pressure_spi
+blacklist st_sensors_spi
+blacklist st_pressure_i2c
+blacklist st_magn_i2c
+blacklist st_pressure
+blacklist st_magn
+blacklist st_sensors_i2c
+blacklist st_sensors
+blacklist industrialio_triggered_buffer
+blacklist industrialio
 ```
 
 
-### Install Kong
+#/etc/modules
+#i2c-dev
+#i2c-bcm2708
+
+
+
+### Install microkube
 ```
-$ helm repo add kong https://charts.konghq.com
-$ helm install kong/kong --generate-name --set ingressController.installCRDs=false
+$ sudo snap install microk8s --classic
+$ microk8s.status
+$ microk8s enable dns
 ```
 
-### Install mini-kube
+### Install the helm charts. 
 ```
-$ curl -LO https://storage.googleapis.com/minikube/releases/v1.6.2/minikube-linux-arm64 
+# Inginx ingress
+$ helm3 repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+$ helm3 install ingress ingress-nginx/ingress-nginx
 
-$ chmod +x minikube-linux-arm
+# Modern Robotics Platform charts
+$ helm3 repo add collective https://chartmuseum.the-collective-group.com
+$ helm3 repo update
 
-$ sudo ./minikube-linux-arm start --vm-driver=none
+$ helm3 upgrade -i redis collective/redis --version v0.1
+$ helm3 upgrade -i redis-proxy collective/redis-proxy --version v0.4
+$ helm3 upgrade -i sense-hat collective/sense-hat --version v0.1
 ```
