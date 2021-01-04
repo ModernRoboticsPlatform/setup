@@ -3,8 +3,8 @@
 ## Modern Robotics Platform 
 The Modern Robotics Platform's goal is to bring robotics more in line with modern  
 software development. This means using modern tools and practices in the creation  
-of robotics applications. This means using tools that are familiar to developers,  
-such as:  
+of robotics applications. This allows developers to use tools that they are more
+familiar with to create robotic applications.
 - Raspberry Pi 4
 - Redis for PubSub and Key Value storage  
 - Docker for running services  
