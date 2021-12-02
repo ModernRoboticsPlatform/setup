@@ -50,7 +50,7 @@ i2c-bcm2708
 
 ### Install microkube
 ```
-$ sudo snap install microk8s --classic
+$ sudo snap install microk8s --classic --channel=1.20/stable
 $ microk8s.status
 $ microk8s enable dns
 ```
