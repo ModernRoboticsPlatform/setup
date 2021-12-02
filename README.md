@@ -67,11 +67,11 @@ $ helm3 repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 $ helm3 install ingress ingress-nginx/ingress-nginx
 
 # Modern Robotics Platform charts
-$ helm3 repo add collective https://chartmuseum.the-collective-group.com
-$ helm3 repo update
+$ helm repo add collective https://chartmuseum.the-collective-group.com
+$ helm repo update
 
-$ helm3 upgrade -i redis collective/redis
-$ helm3 upgrade -i redis-proxy collective/redis-proxy
-$ helm3 upgrade -i web-app collective/web-app
-$ helm3 upgrade -i sense-hat collective/sense-hat
+$ helm upgrade -i redis collective/redis
+$ helm upgrade -i redis-proxy collective/redis-proxy
+$ helm upgrade -i web-app collective/web-app
+$ helm upgrade -i sense-hat collective/sense-hat
 ```
