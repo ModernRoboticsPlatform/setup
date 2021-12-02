@@ -14,8 +14,8 @@ such as:
 
 
 ### Enable cgroup_memory
+`/boot/firmware/cmdline.txt`
 ```
-$ sudo vi /boot/firmware/cmdline.txt
 cgroup_enable=memory swapaccount=1 cgroup_memory=1 cgroup_enable=cpuset
 ```
 
@@ -60,7 +60,7 @@ $ microk8s enable dns
 $ microk8s config
 ```
 
-### Install the helm charts. 
+### Install the helm charts 
 ```
 # Inginx ingress
 $ helm3 repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
