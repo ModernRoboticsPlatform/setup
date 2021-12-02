@@ -41,18 +41,23 @@ blacklist industrialio_triggered_buffer
 blacklist industrialio
 ```
 
-
-#/etc/modules
-#i2c-dev
-#i2c-bcm2708
-
-
+### Add modules 
+`/etc/modules`  
+```
+i2c-dev  
+i2c-bcm2708  
+```
 
 ### Install microkube
 ```
 $ sudo snap install microk8s --classic
 $ microk8s.status
 $ microk8s enable dns
+```
+
+### Get the kubectl config
+```
+$ microk8s config
 ```
 
 ### Install the helm charts. 
