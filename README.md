@@ -63,8 +63,8 @@ $ microk8s config
 ### Install the helm charts 
 ```
 # Inginx ingress
-$ helm3 repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-$ helm3 install ingress ingress-nginx/ingress-nginx
+$ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+$ helm install ingress ingress-nginx/ingress-nginx
 
 # Modern Robotics Platform charts
 $ helm repo add collective https://chartmuseum.the-collective-group.com
